@@ -12,14 +12,9 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     public Animator animator; // animator reference
     private bool isWalking = false; // is the object walking now?
     private bool isFacingRight = true; // is the object facing right direction now
-    private int score = 0; // current gameplay score
-    public Text scoreText;
     public bool win = false;
     private Vector2 startPosition;
     private float killOffset = 1f;
-    private int lives = 3;
-    private int keysToCollect = 3;
-    private int collectedKeys = 0;
     private bool isDoorOpened = false;
 
     void Awake()
@@ -36,55 +31,57 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score: " + score.ToString();
-        if(win)
+        hasFallen();
+        if (GameManager.insance.currentGameState == GameManager.GameState.GS_PAUSEMENU)
         {
-            return;
+            if(Input.GetKey(KeyCode.S))
+            {
+                GameManager.insance.InGame();
+            }
         }
-        if(hasFallen())
+        if (GameManager.insance.currentGameState == GameManager.GameState.GS_GAME)
         {
-            lostLife();
-            //scoreText.text = "Game over!";
+            if (win)
+            {
+                return;
+            }
+            isWalking = false;
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            { // move avatar right
+                transform.Translate(moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+                if (!isFacingRight)
+                    Flip();
+                isWalking = true;
+            }
+            else
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            { // move avatar left
+                if (isFacingRight)
+                    Flip();
+                transform.Translate(-moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
+                isWalking = true;
+            }
+            else
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                Jump(); // jump
+            animator.SetBool("isGrounded", isGrounded());
+            animator.SetBool("isWalking", isWalking);
         }
-        isWalking = false;
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        { // move avatar right
-            transform.Translate(moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
-            if (!isFacingRight)
-                Flip();
-            isWalking = true;
-        }
-        else
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        { // move avatar left
-            if (isFacingRight)
-                Flip();
-            transform.Translate(-moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
-            isWalking = true;
-        }
-        else
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-            Jump(); // jump
-        animator.SetBool("isGrounded", isGrounded());
-        animator.SetBool("isWalking", isWalking);
     }
 
     void lostLife()
     {
         this.transform.position = startPosition;
-        lives--;
-        Debug.Log("You lost a life!");
-        if (lives <= 0)
-        {
-            scoreText.text = "Game over";
-            Debug.Log("GameOver");
-        }
     }
 
     bool hasFallen()
     {
         if (this.transform.position.y <= -10)
+        {
+            lostLife();
+            GameManager.insance.lostLife();
             return true;
+        }
         return false;
     }
 
@@ -112,18 +109,16 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     { // avatar is just touching another object
         if (other.CompareTag("Key"))
         {
-            score += 10;
             other.gameObject.SetActive(false);
-            collectedKeys++;
-            if (collectedKeys >= 3)
+            GameManager.insance.addKeys();
+            if(GameManager.insance.keys >= 3)
             {
                 isDoorOpened = true;
             }
         }
         if (other.CompareTag("Gem"))
         {
-            score += 10; // incease te score
-            Debug.Log("Score: " + score);
+            GameManager.insance.addCoins();
             other.gameObject.SetActive(false);
         }
         if (other.CompareTag("Meta"))
@@ -131,7 +126,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             if(isDoorOpened)
             {
                 Debug.Log("WIN!");
-                scoreText.text = "You win!";
                 win = true;
             }
             else
@@ -145,12 +139,12 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             if (other.gameObject.transform.position.y + killOffset <
             this.transform.position.y)
             {
-                score += 10;
-                Debug.Log("Killed an enemy! Score: " + score);
+                Debug.Log("Killed an enemy!");
             }
             else
             {
                 lostLife();
+                GameManager.insance.lostLife();
             }
         }
 

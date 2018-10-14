@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour {
     public float XMin = 5.5f;
     public float XMax = 5.5f;
     public float killOffset = 1f;
+    private bool isDead = false;
 
     private float startPositionX;
     // Use this for initialization
@@ -19,6 +20,7 @@ public class EnemyController : MonoBehaviour {
         startPositionX = this.transform.position.x;
         this.transform.position = new Vector2(Random.Range(startPositionX - XMin,startPositionX + XMax), this.transform.position.y);
         rigidBody = GetComponent<Rigidbody2D>();
+        animator.SetBool("isDead", isDead);
         Flip();
     }
 
