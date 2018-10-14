@@ -18,6 +18,9 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     private Vector2 startPosition;
     private float killOffset = 1f;
     private int lives = 3;
+    private int keysToCollect = 3;
+    private int collectedKeys = 0;
+    private bool isDoorOpened = false;
 
     void Awake()
     {
@@ -27,12 +30,13 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        setScoreText();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        scoreText.text = "Score: " + score.ToString();
         if(win)
         {
             return;
@@ -106,18 +110,34 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D other)
     { // avatar is just touching another object
+        if (other.CompareTag("Key"))
+        {
+            score += 10;
+            other.gameObject.SetActive(false);
+            collectedKeys++;
+            if (collectedKeys >= 3)
+            {
+                isDoorOpened = true;
+            }
+        }
         if (other.CompareTag("Gem"))
         {
             score += 10; // incease te score
             Debug.Log("Score: " + score);
             other.gameObject.SetActive(false);
-            setScoreText();
         }
         if (other.CompareTag("Meta"))
         {
-            Debug.Log("WIN!");
-            scoreText.text = "You win!";
-            win = true;
+            if(isDoorOpened)
+            {
+                Debug.Log("WIN!");
+                scoreText.text = "You win!";
+                win = true;
+            }
+            else
+            {
+                Debug.Log("You need all stars to win!");
+            }
         }
 
         if (other.CompareTag("Enemy"))
@@ -135,10 +155,5 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         }
 
         }
-
-        void setScoreText()
-    {
-        scoreText.text = "Score: " + score.ToString();
-    }
 }
 

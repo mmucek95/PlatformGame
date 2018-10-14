@@ -8,6 +8,7 @@ TagManager:
   - Gem
   - Meta
   - Enemy
+  - Key
   layers:
   - Default
   - TransparentFX
