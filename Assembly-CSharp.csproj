@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{0DB6BEFA-D23F-DCF2-CF54-C406D554AEEC}</ProjectGuid>
+    <ProjectGuid>{1FAA52F4-B8A9-9F74-7A8E-95E8E788DBAB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -61,18 +61,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\PlayerControllerLevel1.cs" />
+    <None Include="Assets\stg_basic_pics\document_and_picturelist\readme.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt2/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt3/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt3/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt2/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt3/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Users/Marta/Dokumenty/Studia/Semestr7/PGK/Mucek_Marta_Projekt3/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -308,7 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{D5B4E612-E9E2-8C1D-610D-A64928FC9B58}</Project>
+      <Project>{6BED9956-5860-4A7B-C863-CB0B71F9D55D}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

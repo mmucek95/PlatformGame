@@ -15,9 +15,14 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     private int score = 0; // current gameplay score
     public Text scoreText;
     public bool win = false;
+    private Vector2 startPosition;
+    private float killOffset = 1f;
+    private int lives = 3;
+
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        startPosition = this.transform.position;
     }
     // Use this for initialization
     void Start()
@@ -34,7 +39,8 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         }
         if(hasFallen())
         {
-            scoreText.text = "Game over!";
+            lostLife();
+            //scoreText.text = "Game over!";
         }
         isWalking = false;
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -57,6 +63,18 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             Jump(); // jump
         animator.SetBool("isGrounded", isGrounded());
         animator.SetBool("isWalking", isWalking);
+    }
+
+    void lostLife()
+    {
+        this.transform.position = startPosition;
+        lives--;
+        Debug.Log("You lost a life!");
+        if (lives <= 0)
+        {
+            scoreText.text = "Game over";
+            Debug.Log("GameOver");
+        }
     }
 
     bool hasFallen()
@@ -101,9 +119,24 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             scoreText.text = "You win!";
             win = true;
         }
-    }
 
-    void setScoreText()
+        if (other.CompareTag("Enemy"))
+        {
+            if (other.gameObject.transform.position.y + killOffset <
+            this.transform.position.y)
+            {
+                score += 10;
+                Debug.Log("Killed an enemy! Score: " + score);
+            }
+            else
+            {
+                lostLife();
+            }
+        }
+
+        }
+
+        void setScoreText()
     {
         scoreText.text = "Score: " + score.ToString();
     }
