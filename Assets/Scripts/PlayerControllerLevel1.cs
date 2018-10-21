@@ -32,13 +32,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     void Update()
     {
         hasFallen();
-        if (GameManager.insance.currentGameState == GameManager.GameState.GS_PAUSEMENU)
-        {
-            if(Input.GetKey(KeyCode.S))
-            {
-                GameManager.insance.InGame();
-            }
-        }
         if (GameManager.insance.currentGameState == GameManager.GameState.GS_GAME)
         {
             if (win)

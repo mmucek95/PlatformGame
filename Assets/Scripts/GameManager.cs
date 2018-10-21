@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public enum GameState
@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
         GS_GAME_OVER
     }
 
-    public GameState currentGameState = GameState.GS_PAUSEMENU;
+    public GameState currentGameState = GameState.GS_GAME;
     public static GameManager insance;
     public Canvas inGameCanvas;
     public Text coinsText;
@@ -22,17 +22,20 @@ public class GameManager : MonoBehaviour {
     public int keys = 0;
     public int lives = 3;
     public Image[] lifeTab;
+    public Canvas pauseMenuCanvas;
 
     void SetGameState(GameState newGameState)
     {
         currentGameState = newGameState;
         inGameCanvas.enabled = (newGameState == GameState.GS_GAME);
+        pauseMenuCanvas.enabled = (newGameState == GameState.GS_PAUSEMENU);
     }
 
     public void InGame()
     {
         SetGameState(GameState.GS_GAME);
-    }
+    }
+
     public void GameOver()
     {
         SetGameState(GameState.GS_GAME_OVER);
@@ -62,8 +65,8 @@ public class GameManager : MonoBehaviour {
     private void Awake()
     {
         insance = this;
-        
-        for(int i =0; i <keysTab.Length; i++)
+        InGame();
+        for(int i = 0; i <keysTab.Length; i++)
         {
             keysTab[i].color = Color.gray;
         }
@@ -73,9 +76,13 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && (currentGameState == GameState.GS_PAUSEMENU))
+            InGame();
+        else if (Input.GetKeyDown(KeyCode.Escape) && (currentGameState == GameState.GS_GAME))
+            PauseMenu();
+    }
 
     public void lostLife()
     {
@@ -84,5 +91,18 @@ public class GameManager : MonoBehaviour {
         {
             SetGameState(GameState.GS_GAME_OVER);
         }
+    }
+
+    public void OnResumeButtonClicked()
+    {
+        InGame();
+    }
+    public void OnRestartButtonClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void OnExitButtonClicked()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
