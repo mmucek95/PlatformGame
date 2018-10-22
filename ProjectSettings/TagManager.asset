@@ -9,6 +9,7 @@ TagManager:
   - Meta
   - Enemy
   - Key
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

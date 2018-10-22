@@ -36,6 +36,8 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             isWalking = false;
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             { // move avatar right
+                if (transform.parent != null)
+                    Unlock();
                 transform.Translate(moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
                 if (!isFacingRight)
                     Flip();
@@ -44,6 +46,8 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             else
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             { // move avatar left
+                if (transform.parent != null)
+                    Unlock();
                 if (isFacingRight)
                     Flip();
                 transform.Translate(-moveSpeed * Time.deltaTime, 0.0f, 0.0f, Space.World);
@@ -51,7 +55,11 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             }
             else
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                if (transform.parent != null)
+                    Unlock();
                 Jump(); // jump
+            }
             animator.SetBool("isGrounded", isGrounded());
             animator.SetBool("isWalking", isWalking);
         }
@@ -93,6 +101,29 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("MovingPlatform"))
+        {
+            rigidBody.isKinematic = true;
+            transform.parent = other.transform;
+        }
+    }
+    private void Unlock()
+    {
+        rigidBody.isKinematic = false;
+        transform.parent = null;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.CompareTag("MovingPlatform"))
+        {
+            Unlock();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     { // avatar is just touching another object
         if (other.CompareTag("Key"))
@@ -134,7 +165,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
                 GameManager.insance.lostLife();
             }
         }
-
         }
 }
 
