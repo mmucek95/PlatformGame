@@ -23,12 +23,16 @@ public class GameManager : MonoBehaviour {
     public int lives = 3;
     public Image[] lifeTab;
     public Canvas pauseMenuCanvas;
+    public Canvas levelCompleted;
+    public Canvas gameOverCanvas;
 
     void SetGameState(GameState newGameState)
     {
         currentGameState = newGameState;
         inGameCanvas.enabled = (newGameState == GameState.GS_GAME);
         pauseMenuCanvas.enabled = (newGameState == GameState.GS_PAUSEMENU);
+        levelCompleted.enabled = (newGameState == GameState.GS_LEVELCOMPLETED);
+        gameOverCanvas.enabled = (newGameState == GameState.GS_GAME_OVER);
     }
 
     public void InGame()
@@ -48,7 +52,7 @@ public class GameManager : MonoBehaviour {
 
     public void LevelCompleted()
     {
-        SetGameState(GameState.GS_GAME);
+        SetGameState(GameState.GS_LEVELCOMPLETED);
     }
 
     public void addCoins()
@@ -89,7 +93,7 @@ public class GameManager : MonoBehaviour {
         lifeTab[--lives].enabled = false;
         if(lives <=0)
         {
-            SetGameState(GameState.GS_GAME_OVER);
+            insance.GameOver();
         }
     }
 
@@ -104,5 +108,9 @@ public class GameManager : MonoBehaviour {
     public void OnExitButtonClicked()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+    public void OnNextLevelButtonClicked()
+    {
+        SceneManager.LoadScene("Poziom2");
     }
 }

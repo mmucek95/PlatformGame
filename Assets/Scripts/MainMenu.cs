@@ -24,7 +24,13 @@ public class MainMenu : MonoBehaviour {
     public void onLevel1ButtonPressed()
     {
         StartCoroutine(StartGame("Poziom1"));
-    }
+    }
+
+    public void onLevel2ButtonPressed()
+    {
+        StartCoroutine(StartGame("Poziom2"));
+    }
+
     public void ExitGame()
     {
         Application.Quit();

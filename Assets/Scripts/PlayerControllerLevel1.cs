@@ -12,7 +12,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     public Animator animator; // animator reference
     private bool isWalking = false; // is the object walking now?
     private bool isFacingRight = true; // is the object facing right direction now
-    public bool win = false;
     private Vector2 startPosition;
     private float killOffset = 1f;
     private bool isDoorOpened = false;
@@ -34,10 +33,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         hasFallen();
         if (GameManager.insance.currentGameState == GameManager.GameState.GS_GAME)
         {
-            if (win)
-            {
-                return;
-            }
             isWalking = false;
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             { // move avatar right
@@ -118,8 +113,7 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         {
             if(isDoorOpened)
             {
-                Debug.Log("WIN!");
-                win = true;
+                GameManager.insance.LevelCompleted();
             }
             else
             {
