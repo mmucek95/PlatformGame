@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Key
   - MovingPlatform
+  - FallLevel
   layers:
   - Default
   - TransparentFX

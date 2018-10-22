@@ -15,6 +15,7 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     private Vector2 startPosition;
     private float killOffset = 1f;
     private bool isDoorOpened = false;
+    private int killedEnemies = 0;
 
     void Awake()
     {
@@ -30,7 +31,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        hasFallen();
         if (GameManager.insance.currentGameState == GameManager.GameState.GS_GAME)
         {
             isWalking = false;
@@ -68,17 +68,6 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     void lostLife()
     {
         this.transform.position = startPosition;
-    }
-
-    bool hasFallen()
-    {
-        if (this.transform.position.y <= -10)
-        {
-            lostLife();
-            GameManager.insance.lostLife();
-            return true;
-        }
-        return false;
     }
 
     bool isGrounded()
@@ -122,6 +111,11 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         {
             Unlock();
         }
+        else if (other.CompareTag("FallLevel"))
+        {
+            lostLife();
+            GameManager.insance.lostLife();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -157,7 +151,7 @@ public class PlayerControllerLevel1 : MonoBehaviour {
             if (other.gameObject.transform.position.y + killOffset <
             this.transform.position.y)
             {
-                Debug.Log("Killed an enemy!");
+                killedEnemies += 1;
             }
             else
             {

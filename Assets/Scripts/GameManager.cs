@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour {
     public Canvas pauseMenuCanvas;
     public Canvas levelCompleted;
     public Canvas gameOverCanvas;
+    public Text finalScoreText;
+
+    public Text finalGems;
+    public Text finalLives;
 
     void SetGameState(GameState newGameState)
     {
@@ -53,6 +57,9 @@ public class GameManager : MonoBehaviour {
     public void LevelCompleted()
     {
         SetGameState(GameState.GS_LEVELCOMPLETED);
+        finalScoreText.text = "Final score: " + (lives * 20 + coins + 10).ToString();
+        finalGems.text = (coins).ToString() + " x10";
+        finalLives.text = (lives).ToString() + " x20";
     }
 
     public void addCoins()
