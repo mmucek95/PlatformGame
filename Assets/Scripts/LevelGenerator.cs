@@ -11,6 +11,7 @@ public class LevelGenerator : MonoBehaviour {
     void Start () {
         instance = this;
         AddPiece();
+        AddPiece();
 	}
 	
 	public void AddPiece()
