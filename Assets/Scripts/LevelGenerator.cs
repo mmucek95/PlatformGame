@@ -7,17 +7,19 @@ public class LevelGenerator : MonoBehaviour {
     public Transform levelStartPoint;
     public List<LevelPieceBasic> levelPrefabs = new List<LevelPieceBasic>();
     public List<LevelPieceBasic> pieces = new List<LevelPieceBasic>();
+    public LevelPieceBasic startPlatformPiece;
+    bool end = false;
     // Use this for initialization
     void Start () {
         instance = this;
+        ShowPiece((LevelPieceBasic)Instantiate(startPlatformPiece));
         AddPiece();
         AddPiece();
-	}
-	
-	public void AddPiece()
+        AddPiece();
+        AddPiece();
+    }
+    public void ShowPiece(LevelPieceBasic piece)
     {
-        int randomIndex = Random.Range(0, levelPrefabs.Count);
-        LevelPieceBasic piece = (LevelPieceBasic)Instantiate(levelPrefabs[randomIndex]);
         piece.transform.SetParent(this.transform, false);
         if (pieces.Count < 1)
             piece.transform.position = new Vector2(
@@ -30,6 +32,25 @@ public class LevelGenerator : MonoBehaviour {
             pieces[pieces.Count - 1].exitPoint.position.y - pieces[pieces.Count - 1].
             startPoint.localPosition.y);
         pieces.Add(piece);
+    }
+
+    public void AddPiece()
+    {
+        if (end)
+            return;
+        int randomIndex = Random.Range(0, levelPrefabs.Count-1);
+        int endLevel = Random.Range(0, 11);
+        LevelPieceBasic piece;
+        if (endLevel == 10)
+        {
+            piece = (LevelPieceBasic)Instantiate(levelPrefabs[levelPrefabs.Count - 1]);
+            end = true;
+        }
+        else
+        {
+            piece = (LevelPieceBasic)Instantiate(levelPrefabs[randomIndex]);
+        }
+        ShowPiece(piece);
     }
     public void RemoveOldestPiece()
     {

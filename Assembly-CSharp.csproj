@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\EnemyController2.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LeaveTrigger.cs" />
     <Compile Include="Assets\Scripts\LevelGenerator.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MovingPlatformController.cs" />
     <Compile Include="Assets\Scripts\PlayerControllerLevel1.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllerLevel2.cs" />
     <None Include="Assets\stg_basic_pics\document_and_picturelist\readme.txt" />
     <None Include="Assets\Models\Key\readME keys.txt" />
     <Reference Include="UnityEditor.StandardEvents">

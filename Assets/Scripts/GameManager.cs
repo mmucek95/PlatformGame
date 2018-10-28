@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
     public void LevelCompleted()
     {
         SetGameState(GameState.GS_LEVELCOMPLETED);
-        finalScoreText.text = "Final score: " + (lives * 20 + coins + 10).ToString();
+        finalScoreText.text = "Final score: " + (lives * 20 + coins * 10).ToString();
         finalGems.text = (coins).ToString() + " x10";
         finalLives.text = (lives).ToString() + " x20";
     }
