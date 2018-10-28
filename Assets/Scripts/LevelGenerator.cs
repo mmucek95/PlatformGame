@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour {
 	
 	public void AddPiece()
     {
-        int randomIndex = Random.Range(0, levelPrefabs.Count - 1);
+        int randomIndex = Random.Range(0, levelPrefabs.Count);
         LevelPieceBasic piece = (LevelPieceBasic)Instantiate(levelPrefabs[randomIndex]);
         piece.transform.SetParent(this.transform, false);
         if (pieces.Count < 1)
