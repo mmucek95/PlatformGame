@@ -11,6 +11,7 @@ TagManager:
   - Key
   - MovingPlatform
   - FallLevel
+  - LeavePoint
   layers:
   - Default
   - TransparentFX
