@@ -16,11 +16,15 @@ public class PlayerControllerLevel1 : MonoBehaviour {
     private float killOffset = 1f;
     private bool isDoorOpened = false;
     private int killedEnemies = 0;
+    public AudioClip coinSound;
+    private AudioSource source;
+    public AudioClip fallSound;
 
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         startPosition = this.transform.position;
+        source = GetComponent<AudioSource>();
     }
     // Use this for initialization
     void Start()
@@ -115,6 +119,7 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         {
             lostLife();
             GameManager.insance.lostLife();
+            source.PlayOneShot(fallSound, AudioListener.volume);
         }
     }
 
@@ -133,6 +138,7 @@ public class PlayerControllerLevel1 : MonoBehaviour {
         {
             GameManager.insance.addCoins();
             other.gameObject.SetActive(false);
+            source.PlayOneShot(coinSound, AudioListener.volume);
         }
         if (other.CompareTag("Meta"))
         {

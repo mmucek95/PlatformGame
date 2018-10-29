@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\MovingPlatformController.cs" />
     <Compile Include="Assets\Scripts\PlayerControllerLevel1.cs" />
     <Compile Include="Assets\Scripts\PlayerControllerLevel2.cs" />
+    <Compile Include="Assets\Zero Rare\Retro Sound Effects\Demo\Demo.cs" />
     <None Include="Assets\stg_basic_pics\document_and_picturelist\readme.txt" />
     <None Include="Assets\Models\Key\readME keys.txt" />
     <Reference Include="UnityEditor.StandardEvents">
