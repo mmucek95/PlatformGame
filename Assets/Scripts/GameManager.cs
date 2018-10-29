@@ -30,9 +30,34 @@ public class GameManager : MonoBehaviour {
     public Text finalGems;
     public Text finalLives;
 
+    public Text highScoreText;
+    public Text scoreText;
+
     void SetGameState(GameState newGameState)
     {
         currentGameState = newGameState;
+
+        if (newGameState == GameState.GS_LEVELCOMPLETED)
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            if(currentScene.name == "Poziom1")
+            {
+                int score = lives * 20 + coins * 10;
+                if (PlayerPrefs.GetInt("HighscoreLevel1") < score)
+                    PlayerPrefs.SetInt("HighscoreLevel1", score);
+                highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("HighscoreLevel1");
+                scoreText.text = "score: " + score;
+            }
+            else if(currentScene.name == "Poziom2")
+            {
+                int score = lives * 20 + coins * 10;
+                if (PlayerPrefs.GetInt("HighscoreLevel2") < score)
+                    PlayerPrefs.SetInt("HighscoreLevel2", score);
+                highScoreText.text = "Highscore: " + PlayerPrefs.GetInt("HighscoreLevel2");
+                scoreText.text = "score: " + score;
+            }
+        }
+
         inGameCanvas.enabled = (newGameState == GameState.GS_GAME);
         pauseMenuCanvas.enabled = (newGameState == GameState.GS_PAUSEMENU);
         levelCompleted.enabled = (newGameState == GameState.GS_LEVELCOMPLETED);
@@ -57,7 +82,6 @@ public class GameManager : MonoBehaviour {
     public void LevelCompleted()
     {
         SetGameState(GameState.GS_LEVELCOMPLETED);
-        finalScoreText.text = "Final score: " + (lives * 20 + coins * 10).ToString();
         finalGems.text = (coins).ToString() + " x10";
         finalLives.text = (lives).ToString() + " x20";
     }
@@ -75,6 +99,12 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey("HighscoreLevel1"))
+            PlayerPrefs.SetInt("HighscoreLevel1", 0);
+
+        if (!PlayerPrefs.HasKey("HighscoreLevel2"))
+            PlayerPrefs.SetInt("HighscoreLevel2", 0);
+ 
         insance = this;
         InGame();
         for(int i = 0; i <keysTab.Length; i++)

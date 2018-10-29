@@ -54,7 +54,7 @@ public class LevelGenerator : MonoBehaviour {
     }
     public void RemoveOldestPiece()
     {
-        if(pieces.Count > 1)
+        if(pieces.Count > 10)
         {
             LevelPieceBasic oldestPiece = pieces[0];
             pieces.RemoveAt(0);
